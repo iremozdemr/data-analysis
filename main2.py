@@ -2,7 +2,7 @@
 #bool
 #object
 #category
-
+import matplotlib.pyplot as plt
 #kardinalitesi yüksek değişkenler:
 #fazla sınıfa sahip değişkenler
 
@@ -32,5 +32,21 @@ categorical_variables = [column for column in categorical_variables if column no
 
 df[categorical_variables]
 
-def categorical_summary(df):
-    print(df)
+def categorical_summary(dataframe):
+    i = 1
+    for column in categorical_variables:
+        print("###########################")
+        new_df = pd.DataFrame(
+            {
+                column: dataframe[column].value_counts(),
+                "ratio": 100 * dataframe[column].value_counts() / len(dataframe)
+            }
+        )
+        print(new_df)
+        print("###########################")
+        plt.subplot(5,3, i)
+        sns.countplot(x=dataframe[column])
+        i = i+1
+    plt.show()
+
+categorical_summary(df)
